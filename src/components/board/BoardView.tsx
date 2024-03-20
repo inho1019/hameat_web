@@ -1,22 +1,11 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router"
-
-const GET_BOARD_DTO = gql`
-    query getBoardDTO($boardSeq: ID!) {
-        boardView(boardSeq: $boardSeq) {
-            title
-            content
-            fav
-            hit
-            logTime
-        }
-    }
-`;
+import { GetBoardViewDocument } from "@/core/graphql/graphql"
 
 export default function BoardView() {
     const router = useRouter(); 
 
-    const { data } = useQuery(GET_BOARD_DTO,{
+    const { data } = useQuery(GetBoardViewDocument,{
         variables: { boardSeq : router.query.seq }
     })
 

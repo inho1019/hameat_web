@@ -1,0 +1,10 @@
+query GetBoardListType($type: Int!) {
+    boardListType(type:$type) {
+        boardSeq
+        title
+        url
+        fav
+        hit
+        logTime
+    }
+}

@@ -1,4 +1,4 @@
-import BoardView from "@/pages/components/board/BoardView";
+import BoardView from "@/components/board/BoardView";
 import { useRouter } from "next/router";
 
 export default function View() {

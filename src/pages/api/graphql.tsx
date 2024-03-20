@@ -1,8 +1,7 @@
 import { ApolloServer, gql } from "apollo-server-micro";
 import axios from "axios";
 
-const boardListAll =  await axios.get('https://hameat.onrender.com/board/listAll')
-const boardList = boardListAll.data.map((dto : any) => dto[0])
+let boardList = (await axios.get('https://hameat.onrender.com/board/listAll')).data.map((dto : any) => dto[0]);
 
 const typeDefs = gql`
   type Query {
@@ -50,6 +49,7 @@ const resolvers = {
     boardWrite: async (_ : any, args : {boardDTO : BoardWriteDTO}) => {
       try {
         const res = await axios.post('https://hameat.onrender.com/board/write', args.boardDTO);
+        boardList = (await axios.get('https://hameat.onrender.com/board/listAll')).data.map((dto : any) => dto[0]);
         return res.data;
       } catch (e) {
         console.error(e);

@@ -1,6 +1,10 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react"
+import {
+    GetBoardListDocument,
+    GetBoardListTypeDocument
+} from "@/core/graphql/graphql"
 
 const BOARD_WRITE = gql`
     mutation onBoardWrite($boardDTO: BoardWriteDTO!) {
@@ -9,20 +13,6 @@ const BOARD_WRITE = gql`
         }
     }
 `;
-
-const FETCH_BOARD_LIST = gql`
-    query 
-        fetchBoardListType($type: Int!) {
-        boardListType(type: $type) {
-            boardSeq
-            title
-            url
-            fav
-            hit
-            logTime
-        }
-    }
-`
 
 
 export default function BoardWrite() {
@@ -38,23 +28,25 @@ export default function BoardWrite() {
         secret: 0,
         fav: '[]',
     })
-
-    
-    const { refetch: refetchBoardList } = useQuery(FETCH_BOARD_LIST,{
-        variables : { type : boardDTO.type }
-    });
     
     const [onBoardWrite] = useMutation(BOARD_WRITE);
 
     const boardWrite = async () => {
         try {
             await onBoardWrite({
+                refetchQueries: [
+                    GetBoardListDocument,
+                    {
+                        query: GetBoardListTypeDocument,
+                        variables: {
+                            type: boardDTO.type
+                        }
+                    }
+                ],
                 variables: {
                     boardDTO: boardDTO
                 }
             })
-            await refetchBoardList();
-
             router.push(`/board/${boardDTO.type}`)
         } catch (e) {
             console.error(e)

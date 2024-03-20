@@ -1,0 +1,10 @@
+query GetBoardList{
+    boardList {
+        boardSeq
+        title
+        url
+        fav
+        hit
+        logTime
+    }
+}

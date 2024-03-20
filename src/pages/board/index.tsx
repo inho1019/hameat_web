@@ -1,5 +1,5 @@
-import BoardList from "../components/board/BoardList";
-import BoardWriteButton from "../components/board/BoardWriteFix";
+import BoardList from "../../components/board/BoardList";
+import BoardWriteButton from "../../components/board/BoardWriteFix";
 
 export default function Board() {
 

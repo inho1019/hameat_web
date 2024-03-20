@@ -1,0 +1,9 @@
+query getBoardView($boardSeq: ID!) {
+        boardView(boardSeq: $boardSeq) {
+            title
+            content
+            fav
+            hit
+            logTime
+        }
+    }

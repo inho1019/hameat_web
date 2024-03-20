@@ -1,39 +1,16 @@
-import { gql, useQuery } from "@apollo/client"
+import { useQuery } from "@apollo/client"
 import { useRouter } from "next/router"
-
-const BOARD_LIST = gql`
-query {
-    boardList {
-        boardSeq
-        title
-        url
-        fav
-        hit
-        logTime
-    }
-}
-`
-
-const BOARD_LIST_TYPE = gql`
-query 
-    getBoardListType($type: Int!) {
-    boardListType(type:$type) {
-        boardSeq
-        title
-        url
-        fav
-        hit
-        logTime
-    }
-}
-`
+import {
+    GetBoardListDocument,
+    GetBoardListTypeDocument
+} from "@/core/graphql/graphql"
 
 export default function BoardList() {
 
 const router = useRouter()
 const type : string  = Array.isArray(router.query.type) ? router.query.type[0] : router.query.type || "";
 
-const { data } = useQuery(type ? BOARD_LIST_TYPE : BOARD_LIST,{
+const { data } = useQuery(type ? GetBoardListTypeDocument : GetBoardListDocument,{
     variables: { type : parseInt(type) }
 })
 
